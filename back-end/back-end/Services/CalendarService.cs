@@ -10,6 +10,7 @@ namespace back_end.Services
     {
         Task<Calendar?> GetCalendarById(Guid id);
         IQueryable<Calendar?> GetAllCalendars();
+        Task<Calendar?> GetCalendarByTherapistId(Guid id);
         Task AddCalendar(CalendarDto history);
         Task UpdateCalendar(CalendarDto history);
         Task<bool> DeleteCalendar(Guid id);
@@ -36,6 +37,11 @@ namespace back_end.Services
         public IQueryable<Calendar?> GetAllCalendars()
         {
             return _calendars.AsQueryable();
+        }
+
+        public async Task<Calendar?> GetCalendarByTherapistId(Guid id)
+        {
+            return await _calendars.FirstOrDefaultAsync(mh => mh.TherapistId == id);
         }
 
         public async Task AddCalendar(CalendarDto calendar)

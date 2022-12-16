@@ -38,6 +38,18 @@ namespace back_end.Controllers
             return Ok(record);
         }
 
+        [Route("calendar/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetRecordsByCalendarId(Guid id)
+        {
+            var records = _service.GetRecordsByCalendarId(id);
+            if (records is null)
+            {
+                return NotFound($"Records with calendar id {id} does not exist.");
+            }
+            return Ok(records);
+        }
+
         [HttpPost]
         public IActionResult AddRecord([FromBody] RecordDto record)
         {

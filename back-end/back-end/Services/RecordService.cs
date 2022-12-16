@@ -10,6 +10,7 @@ namespace back_end.Services
     {
         Task<Record?> GetRecordById(Guid id);
         IQueryable<Record?> GetAllRecords();
+        IQueryable<Record?> GetRecordsByCalendarId(Guid id);
         Task AddRecord(RecordDto record);
         Task UpdateRecord(RecordDto record);
         Task<bool> DeleteRecord(Guid id);
@@ -38,6 +39,11 @@ namespace back_end.Services
             return _records.AsQueryable();
         }
 
+        public IQueryable<Record?> GetRecordsByCalendarId(Guid id)
+        {
+            return _records.Where(mh => mh.CalendarId == id).AsQueryable();
+        }
+
         public async Task AddRecord(RecordDto record)
         {
             var newRecord = _mapper.Map<Record>(record);
@@ -47,13 +53,13 @@ namespace back_end.Services
 
         public async Task UpdateRecord(RecordDto record)
         {
-            if (!await _records.AnyAsync(h => h.Id == record.Id))
+            var recordToUpdate = await GetRecordById(record.Id);
+            if(recordToUpdate is null)
             {
-                throw new ArgumentException($"Medical history with Id {record.Id} does not exist.");
+                throw new NullReferenceException();
             }
-
-            var newRecord = _mapper.Map<Record>(record);
-            _context.Update(newRecord);
+            _mapper.Map<RecordDto, Record>(record, recordToUpdate);
+            _context.Update(recordToUpdate);
             await _context.SaveChangesAsync();
         }
 

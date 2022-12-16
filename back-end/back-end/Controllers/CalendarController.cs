@@ -38,6 +38,20 @@ namespace back_end.Controllers
             return Ok(calendar);
         }
 
+        [Route("therapist/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetCalendarByTherapistId(Guid id)
+        {
+            var calendar = await _service.GetCalendarByTherapistId(id);
+
+            if (calendar is null)
+            {
+                return NotFound($"Calendar with Id {id} does not exist.");
+            }
+
+            return Ok(calendar);
+        }
+
         [HttpPost]
         public IActionResult AddCalendar([FromBody] CalendarDto calendar)
         {
