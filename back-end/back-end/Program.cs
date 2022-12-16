@@ -1,7 +1,7 @@
 using AutoMapper;
 using back_end.DB;
 using back_end.Mapping;
-//using back_end.Services;
+using back_end.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +11,9 @@ var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 services.AddDbContext<TherapistDbContext>(o => o.UseSqlServer(configuration["ConnectionString"]));
-//services.AddScoped<IPatientService, PatientsService>();
-//services.AddScoped<IMedicalHistoryService, MedicalHistoryService>();
+services.AddScoped<ICalendarService, CalendarService>();
+services.AddScoped<IRecordService, RecordService>();
+services.AddScoped<ITherapistService, TherapistService>();
 services.AddSingleton<IMapper>(Mapping.Create());
 
 
