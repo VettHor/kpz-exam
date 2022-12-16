@@ -9,7 +9,6 @@ export const AddRecordForm = () => {
   const [text, setText] = useState("");
   const [visitTime, setVisitTime] = useState();
   const [frequency, setFrequency] = useState(0);
-  
   const [currRecord, setCurrRecord] = useState(null);
 
   const getAllTherapists = () => {
@@ -24,6 +23,10 @@ export const AddRecordForm = () => {
   useEffect(() => {
     getAllTherapists();
   }, []);
+
+  useEffect(() => {
+    console.log(currRecord);
+  }, [currRecord]);
 
   const items = therapists.map(therapist => {
     return {
@@ -43,15 +46,17 @@ export const AddRecordForm = () => {
           visitTime: visitTime,
           calendarId: response,
           frequency: Number(frequency)
-        })
+        });
       })    
   }
 
+
   const addRecord = (record) => {
     console.log(record)
-    fetch(`${API_URL}/Records`, {
+    fetch(`${API_URL}/Record`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(record)
