@@ -1,6 +1,6 @@
 using AutoMapper;
 using back_end.DB;
-//using back_end.Mapping;
+using back_end.Mapping;
 //using back_end.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 services.AddDbContext<TherapistDbContext>(o => o.UseSqlServer(configuration["ConnectionString"]));
 //services.AddScoped<IPatientService, PatientsService>();
 //services.AddScoped<IMedicalHistoryService, MedicalHistoryService>();
-//services.AddSingleton<IMapper>(Mapping.Create());
+services.AddSingleton<IMapper>(Mapping.Create());
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
