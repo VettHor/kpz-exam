@@ -50,6 +50,18 @@ namespace back_end.Controllers
             return Ok(records);
         }
 
+        [Route("byword/{word}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllRecordsByWord(string word)
+        {
+            var records = _service.GetAllRecordsByWord(word);
+            if (records is null)
+            {
+                return NotFound($"Records with this word does not exist.");
+            }
+            return Ok(records);
+        }
+
         [HttpPost]
         public IActionResult AddRecord([FromBody] RecordDto record)
         {

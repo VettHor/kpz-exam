@@ -10,6 +10,7 @@ namespace back_end.Services
     {
         Task<Record?> GetRecordById(Guid id);
         IQueryable<Record?> GetAllRecords();
+        IQueryable<Record?> GetAllRecordsByWord(string word);
         IQueryable<Record?> GetRecordsByCalendarId(Guid id);
         Task AddRecord(RecordDto record);
         Task UpdateRecord(RecordDto record);
@@ -42,6 +43,11 @@ namespace back_end.Services
         public IQueryable<Record?> GetRecordsByCalendarId(Guid id)
         {
             return _records.Where(mh => mh.CalendarId == id).AsQueryable();
+        }
+
+        public IQueryable<Record?> GetAllRecordsByWord(string word)
+        {
+            return _records.Where(mh => mh.Text.Contains(word)).AsQueryable();
         }
 
         public async Task AddRecord(RecordDto record)
