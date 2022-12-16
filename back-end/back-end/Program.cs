@@ -10,7 +10,7 @@ var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
-services.AddDbContext<DentistDbContext>(o => o.UseSqlServer(configuration["ConnectionString"]));
+services.AddDbContext<TherapistDbContext>(o => o.UseSqlServer(configuration["ConnectionString"]));
 //services.AddScoped<IPatientService, PatientsService>();
 //services.AddScoped<IMedicalHistoryService, MedicalHistoryService>();
 //services.AddSingleton<IMapper>(Mapping.Create());

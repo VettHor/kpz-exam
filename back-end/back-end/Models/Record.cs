@@ -2,24 +2,25 @@
 using Microsoft.Build.Framework;
 using Newtonsoft.Json;
 
+
 namespace back_end.Models
 {
-    public class Therapist
+    public class Record
     {
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Text { get; set; }
 
         [Required]
-        public string Surname { get; set; }
+        public DateTime VisitTime { get; set; }
+
+        [ForeignKey("Calendar")]
+        public Guid CalendarId { get; set; }
 
         [Required]
-        public string ReceptionRoom { get; set; }
-
-        [Required]
-        public bool CanEdit { get; set; }
+        public int Frequency { get; set; }
     }
 }
